@@ -10,7 +10,7 @@ HEADERS = {
 
 
 url = "https://api.реманга.орг/api/activity/comments/?title_id=2060&page=1&ordering=-id"
-domen = "https://api.реманга.орг/"
+domen2 = "https://api.реманга.орг/"
 
 
 class Command(BaseCommand):
@@ -24,5 +24,5 @@ class Command(BaseCommand):
                 username=i["user"]["username"],
                 password="useruser123",
                 nickname=i["user"]["username"],
-                image=domen + i["user"]["avatar"]["high"],
+                image=domen2 + i["user"]["avatar"]["high"],
             )

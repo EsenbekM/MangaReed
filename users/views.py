@@ -28,14 +28,14 @@ class RegisterApiView(views.APIView):
 
 class LoginApiView(views.APIView):
     def post(self, request):
+        serializer = LoginSerializer(data=request.data)
         try:
-            serializer = LoginSerializer(data=request.data).data
             if serializer.is_valid():
                 username = request.data["username"]
                 password = request.data["password"]
                 user = authenticate(username=username, password=password)
                 if user is None:
-                    raise ValueError("User not found, try again body!")
+                    return response.Response("User not found, try again body!")
 
                 access = AccessToken.for_user(user)
                 refresh = RefreshToken.for_user(user)
@@ -53,8 +53,10 @@ class LoginApiView(views.APIView):
 
         except:
             return response.Response(
-                data="Упс, что-то пошло не так! Попробуй в другой раз Т_Т"
+                data={"message":"Упс, что-то пошло не так! Попробуй в другой раз Т_Т",
+                "error": "Not found error"}
             )
+
 
 
 # Create your views here.
