@@ -22,9 +22,9 @@ class Command(BaseCommand):
         data = response.json()
         for h in Manga.objects.all():
             for i in data["content"]:
-                    Comment.objects.create(
-                        user=random.choice(User.objects.all()),
-                        text=i["text"],
-                        likes=i["count_replies"],
-                        manga=h
-                    )
+                Comment.objects.create(
+                    user=random.choice(User.objects.all()),
+                    text=i["text"],
+                    likes=i["count_replies"],
+                    manga=h,
+                )

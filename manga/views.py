@@ -1,7 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import views, status, generics, response
 from .models import Manga, Genre, Translator
-from .serializers import MangaSerializer, MangaDetailSerializer, TopMangaSerializer, CommentSerializer
+from .serializers import (
+    MangaSerializer,
+    MangaDetailSerializer,
+    TopMangaSerializer,
+    CommentSerializer,
+)
 from .filters import MangaFilter
 from rest_framework.filters import SearchFilter
 from .paginations import MangaPagination
@@ -33,7 +38,6 @@ class TopMangaView(generics.ListAPIView):
 class MangaCommentsApiView(views.APIView):
     serializer_class = CommentSerializer
 
-
     def get(self, request, pk):
         manga = get_object_or_404(Manga, pk=pk)
         comments_data = self.serializer_class(
@@ -41,4 +45,6 @@ class MangaCommentsApiView(views.APIView):
         ).data
 
         return response.Response(data=comments_data)
+
+
 # Create your views here.

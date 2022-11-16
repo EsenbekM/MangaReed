@@ -25,9 +25,13 @@ def get_data(html):
     items = soup.find_all("div", class_="leftContent")
     data = []
     for i in items:
-        data.append({
-        "translator": i.find("table", class_="table table-hover").find("a", class_="person-link").get_text()
-        })
+        data.append(
+            {
+                "translator": i.find("table", class_="table table-hover")
+                .find("a", class_="person-link")
+                .get_text()
+            }
+        )
     print(data)
 
 

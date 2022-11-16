@@ -21,7 +21,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ["id","user", "text"]
+        fields = ["id", "user", "text"]
         extra_kwargs = {"author": {"read_only": True}}
 
     def get_count_of_likes(self, obj):
@@ -63,6 +63,7 @@ class MangaDetailSerializer(serializers.ModelSerializer):
 
     def get_comments_count(self, instance):
         return Comment.objects.filter(manga=instance).count()
+
 
 class TopMangaSerializer(serializers.ModelField):
     class Meta:

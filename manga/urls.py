@@ -6,5 +6,5 @@ urlpatterns = [
     path("manga/", MangaApiView.as_view(), name="manga_list_api"),
     path("manga/<pk>/", MangaDetailApiView.as_view(), name="manga_detail_api"),
     path("top-manga/", TopMangaView.as_view()),
-    path("manga/<pk>/comments/", MangaCommentsApiView.as_view())
+    path("manga/<pk>/comments/", MangaCommentsApiView.as_view()),
 ]

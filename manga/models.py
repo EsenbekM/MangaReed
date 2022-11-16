@@ -45,5 +45,4 @@ class Manga(models.Model):
         return self.en_name
 
 
-
 # Create your models here.

@@ -7,6 +7,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=50, unique=True)
     nickname = models.CharField(max_length=60)
     image = models.TextField()
+    image_file = models.ImageField(
+        default="media/default_media/Portraits_2.png",
+        upload_to="media/uploaded_media",
+        null=True,
+        blank=True,
+    )
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -26,7 +32,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    manga = models.ForeignKey("manga.Manga", on_delete=models.CASCADE, related_name="manga_comments")
+    manga = models.ForeignKey(
+        "manga.Manga", on_delete=models.CASCADE, related_name="manga_comments"
+    )
     text = models.TextField()
     likes = models.PositiveIntegerField()
 

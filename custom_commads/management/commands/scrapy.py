@@ -14,6 +14,7 @@ HEADERS = {
 }
 domen = "https://img.newmanga.org/ProjectCard/webp/"
 
+
 class Command(BaseCommand):
     help = "Parsing data from managlib"
 
@@ -34,6 +35,3 @@ class Command(BaseCommand):
                 type=i["type"],
                 rating=i["rating"],
             ).genre.set(random.choices(Genre.objects.all()))
-
-
-
