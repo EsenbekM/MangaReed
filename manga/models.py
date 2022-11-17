@@ -35,6 +35,7 @@ class Manga(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=100)
+    likes = models.PositiveIntegerField()
     rating = models.FloatField(default=0.0, blank=True)
 
     class Meta:

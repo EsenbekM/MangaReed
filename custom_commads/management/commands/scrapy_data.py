@@ -8,6 +8,7 @@ import json
 
 manga_url = "https://api.реманга.орг/api/search/catalog/?ordering=-rating&count=250"
 genre_url = "https://api.реманга.орг/api/forms/titles/?get=genres&get=categories&get=types&get=status&get=age_limit"
+tag_url = "https://api.newmanga.org/v2/tags"
 uri = "https://api.newmanga.org/v2/projects/popular?scale=week&page=1&size=100"
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -17,6 +18,7 @@ domen = "https://img.newmanga.org/ProjectCard/webp/"
 domen2 = "https://api.реманга.орг/"
 
 url = "https://api.реманга.орг/api/activity/comments/?title_id=2060&page=1&ordering=-id"
+
 
 class Command(BaseCommand):
     help = "Parsing data from manga sites, create users and comments"
@@ -46,6 +48,7 @@ class Command(BaseCommand):
                 description=i["description"],
                 image=domen + i["image"]["name"],
                 type=i["type"],
+                likes=i["hearts"],
                 rating=i["rating"],
             ).genre.set(random.choices(Genre.objects.all()))
 
@@ -57,4 +60,3 @@ class Command(BaseCommand):
                     likes=i["count_replies"],
                     manga=h,
                 )
-

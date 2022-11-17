@@ -4,20 +4,25 @@ from .models import Manga, Genre, Translator
 from .serializers import (
     MangaSerializer,
     MangaDetailSerializer,
-    TopMangaSerializer,
+    GenreSerializer,
     CommentSerializer,
 )
 from .filters import MangaFilter
 from rest_framework.filters import SearchFilter
 from .paginations import MangaPagination
 import django_filters
+from django_filters.rest_framework.filters import OrderingFilter
 
 
 class MangaApiView(generics.ListAPIView):
     queryset = Manga.objects.all()
     serializer_class = MangaSerializer
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, SearchFilter)
+    filter_backends = [
+        django_filters.rest_framework.DjangoFilterBackend,
+        SearchFilter,
+    ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
+    filterset_fields = ['type', "genre__title"]
     pagination_class = MangaPagination
 
 
@@ -33,6 +38,12 @@ class MangaDetailApiView(views.APIView):
 class TopMangaView(generics.ListAPIView):
     queryset = Manga.objects.order_by("-rating")
     serializer_class = MangaSerializer
+    filter_backends = [
+        django_filters.rest_framework.DjangoFilterBackend,
+        SearchFilter,
+    ]
+    search_fields = ["en_name", "ru_name", "type", "genre__title"]
+    filterset_fields = ['type', "genre__title"]
 
 
 class MangaCommentsApiView(views.APIView):
@@ -46,5 +57,9 @@ class MangaCommentsApiView(views.APIView):
 
         return response.Response(data=comments_data)
 
-
+class GenreApiView(generics.ListAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+    permission_classes = []
+    authentication_classes = []
 # Create your views here.

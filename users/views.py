@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
 from rest_framework import status, views, generics, response
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from .serializers import UserRegisterSerializer, LoginSerializer
+from .serializers import UserRegisterSerializer, LoginSerializer, ProfileSerializer
 from .models import User
 
 
@@ -53,10 +53,20 @@ class LoginApiView(views.APIView):
 
         except:
             return response.Response(
-                data={"message":"Упс, что-то пошло не так! Попробуй в другой раз Т_Т",
-                "error": "Not found error"}
+                data={
+                    "message": "Упс, что-то пошло не так! Попробуй в другой раз Т_Т",
+                    "error": "Not found error",
+                }
             )
 
 
-
+class UserProfileView(views.APIView):
+    queryset = User.objects.all()
+    permission_classes = []
+    authentication_classes = []
+    serializer_class = ProfileSerializer
+    def get(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        serializer = self.serializer_class(user, many=False, context={"request": request}).data
+        return response.Response(data=serializer, status=status.HTTP_200_OK)
 # Create your views here.

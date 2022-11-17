@@ -5,6 +5,12 @@ from users.models import Comment
 from django.db.models import Avg
 
 
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = ["id", "title"]
+
+
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -56,6 +62,7 @@ class MangaDetailSerializer(serializers.ModelSerializer):
             "description",
             "genre",
             "rating",
+            "likes",
             "translator",
             "created_at",
             "comments_count",
