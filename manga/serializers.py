@@ -14,12 +14,7 @@ class GenreSerializer(serializers.ModelSerializer):
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [
-            "id",
-            "username",
-            "image",
-            "image_file"
-        ]
+        fields = ["id", "username", "image", "image_file"]
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -90,7 +85,7 @@ class CommentAddSerializer(serializers.ModelSerializer):
     user = serializers.CurrentUserDefault()
     text = serializers.CharField(max_length=250)
     manga = serializers.PrimaryKeyRelatedField(read_only=True)
-    
+
     class Meta:
         model = Comment
         fields = ["text", "manga"]

@@ -6,7 +6,7 @@ from .serializers import (
     MangaDetailSerializer,
     GenreSerializer,
     CommentSerializer,
-    CommentAddSerializer
+    CommentAddSerializer,
 )
 from .filters import MangaFilter
 from rest_framework.filters import SearchFilter
@@ -72,6 +72,13 @@ class AddCommentView(views.APIView):
             manga = get_object_or_404(Manga, pk=pk)
             serializer = CommentAddSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
-                serializer.save(manga=manga, user=request.user, text=request.data["text"])
-                return response.Response(data=request.data, status=status.HTTP_201_CREATED)
-        return response.Response(data={"message":"Not authorized error"}, status=status.HTTP_401_UNAUTHORIZED)
+                serializer.save(
+                    manga=manga, user=request.user, text=request.data["text"]
+                )
+                return response.Response(
+                    data=request.data, status=status.HTTP_201_CREATED
+                )
+        return response.Response(
+            data={"message": "Not authorized error"},
+            status=status.HTTP_401_UNAUTHORIZED,
+        )
