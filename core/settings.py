@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "custom_commads",
     "django_filters",
     "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "users",
     "drf_yasg",
 ]

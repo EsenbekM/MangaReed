@@ -18,6 +18,7 @@ class AuthorSerializer(serializers.ModelSerializer):
             "id",
             "username",
             "image",
+            "image_file"
         ]
 
 
@@ -83,3 +84,13 @@ class TopMangaSerializer(serializers.ModelField):
             "rating",
             "type",
         ]
+
+
+class CommentAddSerializer(serializers.ModelSerializer):
+    user = serializers.CurrentUserDefault()
+    text = serializers.CharField(max_length=250)
+    manga = serializers.PrimaryKeyRelatedField(read_only=True)
+    
+    class Meta:
+        model = Comment
+        fields = ["text", "manga"]

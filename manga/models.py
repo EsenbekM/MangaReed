@@ -43,7 +43,7 @@ class Manga(models.Model):
         verbose_name_plural = "Манга"
 
     def __str__(self):
-        return self.en_name
+        return self.en__name
 
 
 # Create your models here.
