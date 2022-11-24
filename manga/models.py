@@ -15,7 +15,7 @@ class Translator(models.Model):
 
 
 class Genre(models.Model):
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=250, unique=True)
 
     class Meta:
         verbose_name = "Жанр"

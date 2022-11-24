@@ -16,7 +16,7 @@ HEADERS = {
 class UserDataParser:
     help = "Parsing data from manga sites, create users and comments"
 
-    def get_data_users(self, *args, **kwargs):
+    def get_data_users(self, *args, **kwargs) -> str:
         try:
             response = requests.get(url=url, headers=HEADERS)
             data = response.json()
