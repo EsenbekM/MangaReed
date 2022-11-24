@@ -33,7 +33,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = ["title"]
+        fields = ["id","title"]
 
 
 class MangaSerializer(serializers.ModelSerializer):

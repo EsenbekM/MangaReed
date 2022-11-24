@@ -20,7 +20,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["nickname"]
 
     def __str__(self):
         return self.username

@@ -24,10 +24,16 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def _create_admin(self, username, password, **extra):
+        admin = self.model(username=username, password=password, **extra)
+        admin.set_password(password)
+        admin.save(using=self._db)
+        return admin
+
     def create_user(self, username, nickname, image, password):
         return self._create_user(username, nickname, image, password)
 
-    def create_superuser(self, username, nickname, password):
-        return self._create_user(
-            username, nickname, password, is_superuser=True, is_staff=True
+    def create_superuser(self, username, password):
+        return self._create_admin(
+            username, password, is_superuser=True, is_staff=True
         )

@@ -10,9 +10,9 @@ from .serializers import (
 )
 from .filters import MangaFilter
 from rest_framework.filters import SearchFilter
-from .paginations import MangaPagination
+from .paginations import MangaPagination, TopMangaPagination, GenrePagination
 import django_filters
-from django_filters.rest_framework.filters import OrderingFilter
+from common.schemas.manga import GetMangaSchema
 
 
 class MangaApiView(generics.ListAPIView):
@@ -24,6 +24,7 @@ class MangaApiView(generics.ListAPIView):
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
     filterset_fields = ["type", "genre__title"]
+    schema = GetMangaSchema()
     pagination_class = MangaPagination
 
 
@@ -45,6 +46,7 @@ class TopMangaView(generics.ListAPIView):
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
     filterset_fields = ["type", "genre__title"]
+    pagination_class = TopMangaPagination
 
 
 class MangaCommentsApiView(views.APIView):
@@ -64,6 +66,7 @@ class GenreApiView(generics.ListAPIView):
     serializer_class = GenreSerializer
     permission_classes = []
     authentication_classes = []
+    pagination_class = GenrePagination
 
 
 class AddCommentView(views.APIView):

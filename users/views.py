@@ -81,6 +81,13 @@ class UserProfileView(views.APIView):
         return response.Response(data=serializer, status=status.HTTP_200_OK)
 
 
+class UsersListApiView(generics.ListAPIView):
+    queryset = User.objects.all()
+    permission_classes = []
+    serializer_class = ProfileSerializer
+    authentication_classes = []
+
+
 class LogoutApiView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
     permission_classes = [IsAuthenticated]
