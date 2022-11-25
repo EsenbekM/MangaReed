@@ -5,5 +5,7 @@ from rest_framework.views import APIView
 
 class MangaDataParser(APIView):
     def get(self, request):
-            Manga.get_data_manga(self)
-            return response.Response(data="Manga data parsed", status=status.HTTP_200_OK)
+        response_data = Manga.help
+        manga_controller = Manga()
+        manga_controller.get_data_manga()
+        return response.Response(data=response_data, status=status.HTTP_200_OK)

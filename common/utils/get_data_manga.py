@@ -1,5 +1,5 @@
 import random
-from manga.models import Manga, Genre
+from manga.models import Manga, Genre, Translator
 from users.models import User, Comment
 import requests
 import json
@@ -22,25 +22,25 @@ url = "https://api.реманга.орг/api/activity/comments/?title_id=2060&pa
 class Manga:
     help = "Parsing data from manga sites, create users and comments"
 
-    def get_data_manga(self, *args, **kwargs):
+    def get_data_manga(self, *args, **kwargs) -> object:
         genre_response = requests.get(url=genre_url, headers=HEADERS)
         genre_data = genre_response.json()
-        try:
-            for i in genre_data["content"]["genres"]:
-                Genre.objects.create(title=i["name"])
+        for i in genre_data["content"]["genres"]:
+            Genre.objects.create(title=i["name"])
 
-            manga_response = requests.get(url=uri, headers=HEADERS)
-            manga_data = manga_response.json()
-            for i in manga_data["items"]:
-                Manga.objects.create(
-                    en_name=i["title"]["en"],
-                    ru_name=i["title"]["ru"],
-                    description=i["description"],
-                    image=domen + i["image"]["name"],
-                    type=i["type"],
-                    likes=i["hearts"],
-                    rating=i["rating"],
-                ).genre.set(random.choices(Genre.objects.all()))
-                return print("Manga create succesfully")
-        except:
-            return print("Manga created")
+        manga_response = requests.get(url=uri, headers=HEADERS)
+        manga_data = manga_response.json()
+        for i in manga_data["items"]:
+            Manga.objects.create(
+                en_name=i["title"]["en"],
+                ru_name=i["title"]["ru"],
+                description=i["description"],
+                image=domen + i["image"]["name"],
+                type=i["type"],
+                likes=i["hearts"],
+                rating=i["rating"],
+            ).genre.set(
+                random.choices(Genre.objects.all()),
+                random.choice(Translator.objects.all()),
+            )
+            return print("Manga create succesfully")

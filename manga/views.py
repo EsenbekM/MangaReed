@@ -23,7 +23,7 @@ class MangaApiView(generics.ListAPIView):
         SearchFilter,
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
-    filterset_fields = ["type", "genre__title"]
+    filterset_fields = ["type", "genre__title", "en_name", "ru_name"]
     schema = GetMangaSchema()
     pagination_class = MangaPagination
 
@@ -45,7 +45,7 @@ class TopMangaView(generics.ListAPIView):
         SearchFilter,
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
-    filterset_fields = ["type", "genre__title"]
+    filterset_fields = ["type", "genre__title", "en_name", "ru_name"]
     pagination_class = TopMangaPagination
 
 
@@ -66,7 +66,7 @@ class GenreApiView(generics.ListAPIView):
     serializer_class = GenreSerializer
     permission_classes = []
     authentication_classes = []
-    pagination_class = GenrePagination
+    # pagination_class = GenrePagination
 
 
 class AddCommentView(views.APIView):
@@ -85,3 +85,175 @@ class AddCommentView(views.APIView):
             data={"message": "Not authorized error"},
             status=status.HTTP_401_UNAUTHORIZED,
         )
+
+
+"""
+
+[
+    {
+        "id": 1,
+        "title": "Боевик"
+    },
+    {
+        "id": 2,
+        "title": "Боевые искусства"
+    },
+    {
+        "id": 3,
+        "title": "Гарем"
+    },
+    {
+        "id": 4,
+        "title": "Гендерная интрига"
+    },
+    {
+        "id": 5,
+        "title": "Героическое фэнтези"
+    },
+    {
+        "id": 6,
+        "title": "Детектив"
+    },
+    {
+        "id": 7,
+        "title": "Дзёсэй"
+    },
+    {
+        "id": 8,
+        "title": "Додзинси"
+    },
+    {
+        "id": 9,
+        "title": "Драма"
+    },
+    {
+        "id": 10,
+        "title": "Игра"
+    },
+    {
+        "id": 11,
+        "title": "История"
+    },
+    {
+        "id": 12,
+        "title": "Киберпанк"
+    },
+    {
+        "id": 13,
+        "title": "Кодомо"
+    },
+    {
+        "id": 14,
+        "title": "Комедия"
+    },
+    {
+        "id": 15,
+        "title": "Махо-сёдзё"
+    },
+    {
+        "id": 16,
+        "title": "Меха"
+    },
+    {
+        "id": 17,
+        "title": "Мистика"
+    },
+    {
+        "id": 18,
+        "title": "Мурим"
+    },
+    {
+        "id": 19,
+        "title": "Научная фантастика"
+    },
+    {
+        "id": 20,
+        "title": "Повседневность"
+    },
+    {
+        "id": 21,
+        "title": "Постапокалиптика"
+    },
+    {
+        "id": 22,
+        "title": "Приключения"
+    },
+    {
+        "id": 23,
+        "title": "Психология"
+    },
+    {
+        "id": 24,
+        "title": "Романтика"
+    },
+    {
+        "id": 25,
+        "title": "Сверхъестественное"
+    },
+    {
+        "id": 26,
+        "title": "Сёдзё"
+    },
+    {
+        "id": 27,
+        "title": "Сёдзё-ай"
+    },
+    {
+        "id": 28,
+        "title": "Сёнэн"
+    },
+    {
+        "id": 29,
+        "title": "Сёнэн-ай"
+    },
+    {
+        "id": 30,
+        "title": "Спорт"
+    },
+    {
+        "id": 31,
+        "title": "Сэйнэн"
+    },
+    {
+        "id": 32,
+        "title": "Трагедия"
+    },
+    {
+        "id": 33,
+        "title": "Триллер"
+    },
+    {
+        "id": 34,
+        "title": "Ужасы"
+    },
+    {
+        "id": 35,
+        "title": "Фантастика"
+    },
+    {
+        "id": 36,
+        "title": "Фэнтези"
+    },
+    {
+        "id": 37,
+        "title": "Школа"
+    },
+    {
+        "id": 38,
+        "title": "Элементы юмора"
+    },
+    {
+        "id": 39,
+        "title": "Этти"
+    },
+    {
+        "id": 40,
+        "title": "Юри"
+    },
+    {
+        "id": 41,
+        "title": "Яой"
+    }
+
+
+"""

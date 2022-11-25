@@ -4,7 +4,6 @@ import random
 import requests
 
 
-
 url = "https://api.реманга.орг/api/activity/comments/?title_id=2060&page=1&ordering=-id"
 domen2 = "https://api.реманга.орг/"
 HEADERS = {
@@ -30,4 +29,3 @@ class UserDataParser:
                 return print("Users create successfully")
         except:
             return print("Users have been created")
-      

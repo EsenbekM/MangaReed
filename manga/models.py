@@ -4,7 +4,6 @@ from .settings import rating_choices, genre_choices
 
 class Translator(models.Model):
     title = models.CharField(max_length=150)
-    image = models.ImageField()
 
     class Meta:
         verbose_name = "Дубляж"
@@ -15,6 +14,7 @@ class Translator(models.Model):
 
 
 class Genre(models.Model):
+    self_id = models.PositiveIntegerField(null=True)
     title = models.CharField(max_length=250, unique=True)
 
     class Meta:
@@ -32,6 +32,8 @@ class Manga(models.Model):
     description = models.TextField()
     genre = models.ManyToManyField(Genre)
     translator = models.ManyToManyField(Translator)
+    chapters_quantity = models.PositiveIntegerField(null=True)
+    issue_year = models.PositiveIntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=100)

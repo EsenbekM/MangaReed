@@ -8,11 +8,23 @@ class GetMangaSchema(AutoSchema):
         api_fields = []
         if method == "GET":
             api_fields = [
-                coreapi.Field(name='id', required=True, location='path',
-                              schema=coreschema.String(description='str (id)')),
-                coreapi.Field(name='page', required=False, location='query',
-                              schema=coreschema.String(description='int (default=0)')),
-                coreapi.Field(name='count', required=False, location='query',
-                              schema=coreschema.String(description='int (default=15)')),
+                coreapi.Field(
+                    name="id",
+                    required=True,
+                    location="path",
+                    schema=coreschema.String(description="str (id)"),
+                ),
+                coreapi.Field(
+                    name="page",
+                    required=False,
+                    location="query",
+                    schema=coreschema.String(description="int (default=0)"),
+                ),
+                coreapi.Field(
+                    name="count",
+                    required=False,
+                    location="query",
+                    schema=coreschema.String(description="int (default=15)"),
+                ),
             ]
         return self._manual_fields + api_fields
