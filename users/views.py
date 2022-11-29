@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 from rest_framework import status, views, generics, response
 from rest_framework.permissions import IsAuthenticated

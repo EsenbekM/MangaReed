@@ -1,8 +1,7 @@
 from rest_framework import serializers
-from .models import Manga, Translator, Genre
+from .models import Manga, Genre
 from users.models import User, Comment
 from users.models import Comment
-from django.db.models import Avg
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -59,7 +58,6 @@ class MangaDetailSerializer(serializers.ModelSerializer):
             "genre",
             "rating",
             "likes",
-            "translator",
             "created_at",
             "comments_count",
         ]

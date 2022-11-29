@@ -2,17 +2,6 @@ from django.db import models
 from .settings import rating_choices, genre_choices
 
 
-class Translator(models.Model):
-    title = models.CharField(max_length=150)
-
-    class Meta:
-        verbose_name = "Дубляж"
-        verbose_name_plural = "Дубляж"
-
-    def __str__(self):
-        return self.title
-
-
 class Genre(models.Model):
     self_id = models.PositiveIntegerField(null=True)
     title = models.CharField(max_length=250, unique=True)
@@ -26,12 +15,11 @@ class Genre(models.Model):
 
 
 class Manga(models.Model):
-    en_name = models.CharField(max_length=200)
-    ru_name = models.CharField(max_length=200)
+    en_name = models.CharField(max_length=200, unique=True)
+    ru_name = models.CharField(max_length=200, unique=True)
     image = models.TextField()
     description = models.TextField()
     genre = models.ManyToManyField(Genre)
-    translator = models.ManyToManyField(Translator)
     chapters_quantity = models.PositiveIntegerField(null=True)
     issue_year = models.PositiveIntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -45,7 +33,7 @@ class Manga(models.Model):
         verbose_name_plural = "Манга"
 
     def __str__(self):
-        return self.en__name
+        return self.en_name
 
 
 # Create your models here.

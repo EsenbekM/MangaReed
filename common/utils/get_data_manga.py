@@ -1,5 +1,5 @@
 import random
-from manga.models import Manga, Genre, Translator
+from manga.models import Manga, Genre
 from users.models import User, Comment
 import requests
 import json
@@ -41,6 +41,5 @@ class Manga:
                 rating=i["rating"],
             ).genre.set(
                 random.choices(Genre.objects.all()),
-                random.choice(Translator.objects.all()),
             )
             return print("Manga create succesfully")

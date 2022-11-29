@@ -6,7 +6,6 @@ import random
 import requests
 
 
-
 url = "https://api.remanga.org/api/activity/comments/?title_id=8813&page=2&ordering=&count=20"
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -21,9 +20,9 @@ class Command(BaseCommand):
         response = requests.get(url=url, headers=HEADERS)
         data = response.json()
         for h in Manga.objects.all():
-                for i in data["content"]:
-                    Comment.objects.create(
-                        user=random.choice(User.objects.all()),
-                        text=i["text"],
-                        manga=h,
-                    )
+            for i in data["content"]:
+                Comment.objects.create(
+                    user=random.choice(User.objects.all()),
+                    text=i["text"],
+                    manga=h,
+                )
