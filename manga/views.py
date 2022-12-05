@@ -1,18 +1,19 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import views, status, generics, response
 from .models import Manga, Genre
+from users.models import Comment
 from .serializers import (
     MangaSerializer,
     MangaDetailSerializer,
     GenreSerializer,
     CommentSerializer,
     CommentAddSerializer,
+    LikeCommentSerializer,
 )
 
 from rest_framework.filters import SearchFilter
 from .paginations import MangaPagination, TopMangaPagination
 import django_filters
-from common.schemas.manga import GetMangaSchema
 
 
 class MangaApiView(generics.ListAPIView):
@@ -24,7 +25,6 @@ class MangaApiView(generics.ListAPIView):
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
     filterset_fields = ["type", "genre__title", "en_name", "ru_name"]
-    schema = GetMangaSchema()
     pagination_class = MangaPagination
 
 
@@ -84,3 +84,11 @@ class AddCommentView(views.APIView):
             data={"message": "Not authorized error"},
             status=status.HTTP_401_UNAUTHORIZED,
         )
+
+
+class LikeCommentView(views.APIView):
+    def post(self, request, pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        serializer = LikeCommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(comment=comment, user=request.user)

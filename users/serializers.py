@@ -39,6 +39,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "username",
             "nickname",
             "image",
+            "image_file",
         ]
 
 

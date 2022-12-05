@@ -87,3 +87,8 @@ class CommentAddSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ["text", "manga"]
+
+
+class LikeCommentSerializer(serializers.Serializer):
+    user = serializers.CurrentUserDefault()
+    comment = serializers.PrimaryKeyRelatedField(read_only=True)

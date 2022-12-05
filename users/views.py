@@ -27,7 +27,7 @@ class RegisterApiView(views.APIView):
                 "status": status.HTTP_201_CREATED,
                 "username": request.data["username"],
                 "nickname": request.data["nickname"],
-                "message": "Register successfully, welcome to the club body!",
+                "message": "Register successfully",
             }
             serializer.save()
             return response.Response(data=response_data)

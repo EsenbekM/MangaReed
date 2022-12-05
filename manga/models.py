@@ -4,7 +4,7 @@ from .settings import rating_choices, genre_choices
 
 class Genre(models.Model):
     self_id = models.PositiveIntegerField(null=True)
-    title = models.CharField(max_length=250, unique=True)
+    title = models.CharField(max_length=250)
 
     class Meta:
         verbose_name = "Жанр"
