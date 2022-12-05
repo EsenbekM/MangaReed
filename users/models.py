@@ -8,7 +8,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     nickname = models.CharField(max_length=60)
     image = models.TextField()
     image_file = models.ImageField(
-        default="default_media/Portraits_2.png",
+        default="default_media/avatar.jpg",
         upload_to="uploaded_media",
         null=True,
         blank=True,
@@ -35,7 +35,6 @@ class Comment(models.Model):
         "manga.Manga", on_delete=models.CASCADE, related_name="manga_comments"
     )
     text = models.TextField()
-    likes = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return f"{self.user} commented manga :{self.manga}"

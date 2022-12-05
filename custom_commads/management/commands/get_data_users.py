@@ -16,7 +16,7 @@ class Command(BaseCommand):
     help = "Parsing data from manga sites, create users and comments"
 
     def handle(self, *args, **kwargs):
-        for page in range(20, 50):
+        for page in range(20, 40):
             url = f"https://api.remanga.org/api/activity/comments/?title_id=8813&page={str(page)}&ordering=&count=20"
 
             response = requests.get(url=url, headers=HEADERS)

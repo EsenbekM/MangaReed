@@ -27,10 +27,6 @@ class Command(BaseCommand):
                 content_data = (g for g in request_data["content"])
                 content_data = list(content_data)
                 genre_filter_set = item["genres"]
-                for i in genre_filter_set:
-                    global genre_filter_id
-                    genre_filter_name = i["name"]
-
                 manga = Manga.objects.create(
                     en_name=item["en_name"],
                     ru_name=item["rus_name"],
@@ -41,4 +37,8 @@ class Command(BaseCommand):
                     likes=item["total_votes"],
                     chapters_quantity=item["count_chapters"],
                 )
-                manga.genre.set(Genre.objects.filter(title=genre_filter_name))
+                for i in genre_filter_set:
+                    global genre_filter_name
+                    genre_filter_name = i["name"]
+
+                    manga.genre.add(*Genre.objects.filter(title=genre_filter_name))

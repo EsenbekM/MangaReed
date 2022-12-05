@@ -56,6 +56,8 @@ class MangaDetailSerializer(serializers.ModelSerializer):
             "image",
             "description",
             "genre",
+            "chapters_quantity",
+            "issue_year",
             "rating",
             "likes",
             "created_at",
