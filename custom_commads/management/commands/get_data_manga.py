@@ -21,15 +21,15 @@ class Command(BaseCommand):
             )
             request = requests.get(url=url, headers=HEADERS)
             request_data = request.json()
-            content_data = request_data["content"]
 
             for item in request_data["content"]:
-                content_data = (g for g in request_data["content"])
-                content_data = list(content_data)
+                global url2
+                url2 = f"https://api.remanga.org/api/titles/" + item["dir"] + "/"
                 genre_filter_set = item["genres"]
                 manga = Manga.objects.create(
                     en_name=item["en_name"],
                     ru_name=item["rus_name"],
+                    dir=item["dir"],
                     image=domen + item["cover_high"],
                     type=item["type"],
                     issue_year=item["issue_year"],
@@ -42,3 +42,13 @@ class Command(BaseCommand):
                     genre_filter_name = i["name"]
 
                     manga.genre.add(*Genre.objects.filter(title=genre_filter_name))
+                detail_request = requests.get(url=url2, headers=HEADERS)
+                detail_data = detail_request.json()
+                try:
+                    created_manga = Manga.objects.filter(dir=detail_data["content"]["dir"])
+                except:
+                    continue
+                for m in created_manga:
+                    description = detail_data["content"]["description"]
+                    manga = Manga.objects.filter(en_name=m)
+                    manga.update(description=description)

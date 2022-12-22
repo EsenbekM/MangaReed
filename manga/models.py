@@ -16,8 +16,9 @@ class Genre(models.Model):
 class Manga(models.Model):
     en_name = models.CharField(max_length=200)
     ru_name = models.CharField(max_length=200)
+    dir = models.CharField(max_length=250, null=True, blank=True)
     image = models.TextField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     genre = models.ManyToManyField(Genre)
     chapters_quantity = models.PositiveIntegerField(null=True)
     issue_year = models.PositiveIntegerField(null=True)

@@ -17,8 +17,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             "image_file",
             "password",
         ]
-    
-    
+
     def create(self, validated_data):
         return User.objects.create_human(
             username=validated_data["username"],

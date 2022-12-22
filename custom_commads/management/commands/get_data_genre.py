@@ -4,8 +4,10 @@ from bs4 import BeautifulSoup
 
 import requests
 
+
 class Command(BaseCommand):
     help = "Create genres"
+
     def handle(self, *args, **kwargs):
         Genre.objects.get_or_create(title="Боевик")
         Genre.objects.get_or_create(title="Гарем")
@@ -49,7 +51,3 @@ class Command(BaseCommand):
         Genre.objects.get_or_create(title="Этти")
         Genre.objects.get_or_create(title="Юри")
         Genre.objects.get_or_create(title="Яой")
-
-
-        
-        
