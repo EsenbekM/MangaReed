@@ -45,7 +45,9 @@ class Command(BaseCommand):
                 detail_request = requests.get(url=url2, headers=HEADERS)
                 detail_data = detail_request.json()
                 try:
-                    created_manga = Manga.objects.filter(dir=detail_data["content"]["dir"])
+                    created_manga = Manga.objects.filter(
+                        dir=detail_data["content"]["dir"]
+                    )
                 except:
                     continue
                 for m in created_manga:
