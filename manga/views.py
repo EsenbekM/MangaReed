@@ -25,7 +25,7 @@ class MangaApiView(generics.ListAPIView):
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
     filterset_fields = ["type", "genre__title", "en_name", "ru_name"]
-    pagination_class = MangaPagination
+    #pagination_class = MangaPagination
 
 
 class MangaDetailApiView(views.APIView):
@@ -46,7 +46,6 @@ class TopMangaView(generics.ListAPIView):
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
     filterset_fields = ["type", "genre__title", "en_name", "ru_name"]
-    pagination_class = TopMangaPagination
 
 
 class MangaCommentsApiView(views.APIView):
