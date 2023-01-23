@@ -22,11 +22,13 @@ from rest_framework_simplejwt.views import (
 from django.conf import settings
 from django.conf.urls.static import static
 from .swagger import urlpatterns as swagger_urls
+from rest_framework.documentation import include_docs_urls
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include("manga.urls")),
+    path("docs/", include_docs_urls(title="Manga Read API")),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/auth/", include("users.urls")),
 ]

@@ -11,6 +11,7 @@ from .serializers import (
     LogoutSerializer,
 )
 from .models import User
+from common.shemas import users
 
 
 class RegisterApiView(views.APIView):
@@ -18,6 +19,7 @@ class RegisterApiView(views.APIView):
     serializer_class = UserRegisterSerializer
     permission_classes = []
     authentication_classes = []
+    schema = users.SignUpSchema()
 
     def post(self, request):
         data = request.data
@@ -33,9 +35,11 @@ class RegisterApiView(views.APIView):
             return response.Response(data=response_data)
 
 
-class LoginApiView(views.APIView):
+class LoginApiView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+    schema = users.SignInSchema()
     def post(self, request):
-        serializer = LoginSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         try:
             if serializer.is_valid():
                 username = request.data["username"]

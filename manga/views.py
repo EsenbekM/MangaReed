@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import views, status, generics, response
+from rest_framework import views, status, generics, response, permissions
 from .models import Manga, Genre
 from users.models import Comment
 from .serializers import (
@@ -14,6 +14,7 @@ from .serializers import (
 from rest_framework.filters import SearchFilter
 from .paginations import MangaPagination, TopMangaPagination
 import django_filters
+from common.shemas import manga
 
 
 class MangaApiView(generics.ListAPIView):
@@ -25,13 +26,17 @@ class MangaApiView(generics.ListAPIView):
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
     filterset_fields = ["type", "genre__title", "en_name", "ru_name"]
-    #pagination_class = MangaPagination
+    schema = manga.MangaListShema()
+    # pagination_class = MangaPagination
 
 
-class MangaDetailApiView(views.APIView):
+class MangaDetailApiView(generics.GenericAPIView):
+    serializer_class = MangaDetailSerializer
+    schema = manga.MangaDetailShema()
+
     def get(self, request, pk):
         instance = get_object_or_404(Manga, pk=pk)
-        serializer = MangaDetailSerializer(
+        serializer = self.serializer_class(
             instance, many=False, context={"request": request}
         ).data
         return response.Response(data=serializer, status=status.HTTP_200_OK)
@@ -46,10 +51,12 @@ class TopMangaView(generics.ListAPIView):
     ]
     search_fields = ["en_name", "ru_name", "type", "genre__title"]
     filterset_fields = ["type", "genre__title", "en_name", "ru_name"]
+    schema = manga.MangaListShema()
 
 
-class MangaCommentsApiView(views.APIView):
+class MangaCommentsApiView(generics.GenericAPIView):
     serializer_class = CommentSerializer
+    schema = manga.MangaCommentsList()
 
     def get(self, request, pk):
         manga = get_object_or_404(Manga, pk=pk)
@@ -67,11 +74,17 @@ class GenreApiView(generics.ListAPIView):
     authentication_classes = []
 
 
-class AddCommentView(views.APIView):
+class AddCommentView(generics.GenericAPIView):
+    serializer_class = CommentAddSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    schema = manga.MangaAddCommentSchema()
+
     def post(self, request, pk):
         if request.user.is_authenticated:
             manga = get_object_or_404(Manga, pk=pk)
-            serializer = CommentAddSerializer(data=request.data)
+            serializer = self.get_serializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save(
                     manga=manga, user=request.user, text=request.data["text"]
@@ -83,11 +96,3 @@ class AddCommentView(views.APIView):
             data={"message": "Not authorized error"},
             status=status.HTTP_401_UNAUTHORIZED,
         )
-
-
-class LikeCommentView(views.APIView):
-    def post(self, request, pk):
-        comment = get_object_or_404(Comment, pk=pk)
-        serializer = LikeCommentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(comment=comment, user=request.user)
