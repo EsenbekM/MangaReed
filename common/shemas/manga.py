@@ -50,7 +50,7 @@ class MangaDetailShema(AutoSchema):
                 coreapi.Field(
                     name="id",
                     required=False,
-                    location="query",
+                    location="path",
                     schema=coreschema.String(
                         description="id - 'id(Primary key) of manga'"
                     ),
