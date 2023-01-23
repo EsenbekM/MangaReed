@@ -71,25 +71,25 @@ class LoginApiView(generics.GenericAPIView):
             )
 
 
-class UserProfileView(views.APIView):
-    queryset = User.objects.all()
-    permission_classes = []
-    authentication_classes = []
-    serializer_class = ProfileSerializer
+# class UserProfileView(views.APIView):
+#     queryset = User.objects.all()
+#     permission_classes = []
+#     authentication_classes = []
+#     serializer_class = ProfileSerializer
 
-    def get(self, request, pk):
-        user = get_object_or_404(User, pk=pk)
-        serializer = self.serializer_class(
-            user, many=False, context={"request": request}
-        ).data
-        return response.Response(data=serializer, status=status.HTTP_200_OK)
+#     def get(self, request, pk):
+#         user = get_object_or_404(User, pk=pk)
+#         serializer = self.serializer_class(
+#             user, many=False, context={"request": request}
+#         ).data
+#         return response.Response(data=serializer, status=status.HTTP_200_OK)
 
 
-class UsersListApiView(generics.ListAPIView):
-    queryset = User.objects.all()
-    permission_classes = []
-    serializer_class = ProfileSerializer
-    authentication_classes = []
+# class UsersListApiView(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     permission_classes = []
+#     serializer_class = ProfileSerializer
+#     authentication_classes = []
 
 
 class LogoutApiView(generics.GenericAPIView):
