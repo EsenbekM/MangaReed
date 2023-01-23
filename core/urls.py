@@ -28,7 +28,7 @@ from rest_framework.documentation import include_docs_urls
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include("manga.urls")),
-    path("docs/", include_docs_urls(title="Manga Read API")),
+    path("swagger/", include_docs_urls(title="Manga Read API")),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/auth/", include("users.urls")),
 ]
@@ -37,4 +37,3 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += swagger_urls
