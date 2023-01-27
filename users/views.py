@@ -12,6 +12,7 @@ from .serializers import (
 )
 from .models import User
 from common.shemas import users
+from .exceptions import UsernameExistsException
 
 
 class RegisterApiView(views.APIView):
@@ -25,14 +26,17 @@ class RegisterApiView(views.APIView):
         data = request.data
         serializer = self.serializer_class(data=data)
         if serializer.is_valid(raise_exception=True):
-            response_data = {
-                "status": status.HTTP_201_CREATED,
-                "username": request.data["username"],
-                "nickname": request.data["nickname"],
-                "message": "Register successfully",
-            }
-            serializer.save()
-            return response.Response(data=response_data)
+            if not User.objects.filter(username=request.data["username"]).exists():
+                response_data = {
+                    "status": status.HTTP_201_CREATED,
+                    "username": request.data["username"],
+                    "nickname": request.data["nickname"],
+                    "message": "Register successfully",
+                }
+                serializer.save()
+                return response.Response(data=response_data)
+            raise UsernameExistsException()
+        return response.Response(data=serializer.errors)
 
 
 class LoginApiView(generics.GenericAPIView):
